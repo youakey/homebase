@@ -104,7 +104,7 @@ export function SettingsPage() {
 
   return (
     <div className="flex flex-col gap-4 p-4">
-      <h1 className="text-lg font-semibold">Настройки</h1>
+      <h1 className="font-heading text-xl">Настройки</h1>
 
       {incomingSwaps.length > 0 && (
         <Link
@@ -169,7 +169,7 @@ export function SettingsPage() {
           <div>
             <Label className="text-xs text-muted-foreground">Код приглашения</Label>
             <div className="mt-1 flex items-center gap-2">
-              <span className="rounded-lg border bg-muted px-4 py-2 font-mono text-xl tracking-widest">
+              <span className="rounded-xl border border-flame-500/40 bg-muted px-4 py-2 font-mono text-xl tracking-widest text-flame-400">
                 {currentProject?.invite_code}
               </span>
               <Button variant="outline" size="icon" className="size-9" onClick={copyInviteCode}>

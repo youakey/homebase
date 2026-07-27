@@ -62,7 +62,7 @@ export function CommentsThread({ mealSlotId }: { mealSlotId: string }) {
   }
 
   return (
-    <div className="mt-2 border-t pt-2">
+    <div className="mt-2 border-t border-border pt-2">
       <button
         onClick={() => setOpen((v) => !v)}
         className="flex min-h-[36px] items-center gap-1.5 text-xs text-muted-foreground"

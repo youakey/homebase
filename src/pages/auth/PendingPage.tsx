@@ -10,13 +10,13 @@ export function PendingPage() {
   const project = pendingMemberships[0]?.project
 
   return (
-    <div className="flex min-h-svh items-center justify-center p-4">
+    <div className="bg-glow flex min-h-svh items-center justify-center p-4">
       <Card className="w-full max-w-sm">
         <CardHeader className="items-center text-center">
           <div className="mb-2 flex size-12 items-center justify-center rounded-2xl bg-muted">
             <Clock3 className="size-6 text-muted-foreground" />
           </div>
-          <CardTitle className="text-xl">Заявка отправлена</CardTitle>
+          <CardTitle className="font-heading text-2xl">Заявка отправлена</CardTitle>
           <CardDescription>
             {project ? (
               <>

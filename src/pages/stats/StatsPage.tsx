@@ -5,6 +5,7 @@ import { fetchBestCook, fetchMostResponsible, fetchMostActiveChatter } from '@/l
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import { WeeklyRhythm } from './WeeklyRhythm'
 
 function initials(name: string) {
   return name.split(' ').map((p) => p[0]).slice(0, 2).join('').toUpperCase()
@@ -26,9 +27,9 @@ function StatCard({
   loading: boolean
 }) {
   return (
-    <Card>
+    <Card className={name && !loading ? 'border-flame-500/40 shadow-[0_0_0_1px_var(--flame-glow)]' : undefined}>
       <CardContent className="flex items-center gap-3 py-4">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-b from-flame-400 to-flame-600 text-primary-foreground">
           <Icon className="size-5" />
         </div>
         <div className="min-w-0 flex-1">
@@ -37,18 +38,18 @@ function StatCard({
             <Skeleton className="mt-1 h-5 w-32" />
           ) : name ? (
             <div className="mt-0.5 flex items-center gap-2">
-              <Avatar className="size-6">
+              <Avatar className="size-6" accent>
                 <AvatarImage src={avatarUrl ?? undefined} />
                 <AvatarFallback className="text-[10px]">{initials(name)}</AvatarFallback>
               </Avatar>
-              <span className="truncate text-sm font-semibold">{name}</span>
+              <span className="truncate font-heading text-sm">{name}</span>
             </div>
           ) : (
             <p className="mt-0.5 text-sm text-muted-foreground">Пока нет данных</p>
           )}
         </div>
         {detail && !loading && name && (
-          <span className="shrink-0 rounded-full bg-muted px-2.5 py-1 text-xs font-medium">{detail}</span>
+          <span className="shrink-0 rounded-full bg-muted px-2.5 py-1 font-mono text-xs font-medium">{detail}</span>
         )}
       </CardContent>
     </Card>
@@ -75,8 +76,10 @@ export function StatsPage() {
   })
 
   return (
-    <div className="flex flex-col gap-3 p-4">
-      <h1 className="text-lg font-semibold">Статистика</h1>
+    <div className="bg-glow flex flex-col gap-3 p-4">
+      <h1 className="font-heading text-xl">Статистика</h1>
+
+      <WeeklyRhythm />
 
       <StatCard
         icon={ChefHat}

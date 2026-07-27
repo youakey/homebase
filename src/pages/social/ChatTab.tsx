@@ -134,7 +134,7 @@ export function ChatTab() {
 
       <form
         onSubmit={handleSubmit}
-        className="sticky bottom-20 mt-2 flex items-end gap-2 border-t bg-background/95 p-3 backdrop-blur"
+        className="sticky bottom-20 mt-2 flex items-end gap-2 border-t border-border bg-card/95 p-3 backdrop-blur-xl"
       >
         <Textarea
           value={text}

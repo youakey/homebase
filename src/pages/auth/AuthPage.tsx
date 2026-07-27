@@ -38,13 +38,13 @@ export function AuthPage() {
   }
 
   return (
-    <div className="flex min-h-svh items-center justify-center p-4">
+    <div className="bg-glow flex min-h-svh items-center justify-center p-4">
       <Card className="w-full max-w-sm">
         <CardHeader className="items-center text-center">
-          <div className="mb-2 flex size-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
+          <div className="mb-2 flex size-12 items-center justify-center rounded-2xl bg-gradient-to-b from-flame-400 to-flame-600 text-primary-foreground shadow-[0_4px_16px_var(--flame-glow)]">
             <Home className="size-6" />
           </div>
-          <CardTitle className="text-xl">HomeBase</CardTitle>
+          <CardTitle className="font-heading text-2xl">HomeBase</CardTitle>
           <CardDescription>
             {mode === 'login' ? 'Войдите в свой аккаунт' : 'Создайте аккаунт, чтобы начать'}
           </CardDescription>

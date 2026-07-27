@@ -56,20 +56,24 @@ export function OnboardingPage() {
   }
 
   return (
-    <div className="flex min-h-svh items-center justify-center p-4">
+    <div className="bg-glow flex min-h-svh items-center justify-center p-4">
       <Card className="w-full max-w-sm">
         {view === 'choice' && (
           <>
             <CardHeader className="text-center">
-              <CardTitle className="text-xl">Добро пожаловать!</CardTitle>
+              <CardTitle className="font-heading text-2xl">Добро пожаловать!</CardTitle>
               <CardDescription>Создайте проект для своей квартиры или вступите в существующий</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-3">
-              <Button className="h-12 justify-start gap-3" onClick={() => setView('create')}>
+              <Button className="h-16 justify-start gap-3 rounded-2xl text-base" onClick={() => setView('create')}>
                 <PlusCircle className="size-5" />
                 Создать проект
               </Button>
-              <Button variant="outline" className="h-12 justify-start gap-3" onClick={() => setView('join')}>
+              <Button
+                variant="outline"
+                className="h-16 justify-start gap-3 rounded-2xl text-base"
+                onClick={() => setView('join')}
+              >
                 <LogIn className="size-5" />
                 Вступить в проект
               </Button>
@@ -89,7 +93,7 @@ export function OnboardingPage() {
               >
                 <ArrowLeft className="size-4" /> Назад
               </button>
-              <CardTitle className="text-xl">Новый проект</CardTitle>
+              <CardTitle className="font-heading text-2xl">Новый проект</CardTitle>
               <CardDescription>Придумайте название — например, адрес квартиры</CardDescription>
             </CardHeader>
             <CardContent>
@@ -123,7 +127,7 @@ export function OnboardingPage() {
               >
                 <ArrowLeft className="size-4" /> Назад
               </button>
-              <CardTitle className="text-xl">Вступить в проект</CardTitle>
+              <CardTitle className="font-heading text-2xl">Вступить в проект</CardTitle>
               <CardDescription>Введите код приглашения, который вам дали соседи</CardDescription>
             </CardHeader>
             <CardContent>
@@ -152,11 +156,11 @@ export function OnboardingPage() {
         {view === 'created' && (
           <>
             <CardHeader className="text-center">
-              <CardTitle className="text-xl">Проект создан 🎉</CardTitle>
+              <CardTitle className="font-heading text-2xl">Проект создан 🎉</CardTitle>
               <CardDescription>Передайте этот код соседям, чтобы они могли присоединиться</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col items-center gap-4">
-              <div className="flex items-center gap-2 rounded-lg border bg-muted px-6 py-4 font-mono text-3xl tracking-widest">
+              <div className="flex items-center gap-2 rounded-xl border border-flame-500/40 bg-muted px-6 py-4 font-mono text-3xl tracking-widest text-flame-400">
                 {createdCode}
               </div>
               <Button variant="outline" onClick={copyCode} className="gap-2">

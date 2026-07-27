@@ -16,8 +16,7 @@ import {
   cancelDutySwap,
 } from '@/lib/supabase/cleaning'
 import { Button } from '@/components/ui/button'
-import { Switch } from '@/components/ui/switch'
-import { Label } from '@/components/ui/label'
+import { cn } from '@/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -106,17 +105,31 @@ export function CleaningPage() {
   return (
     <div className="flex flex-col gap-3 p-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-semibold">Уборка кухни</h1>
-        <div className="flex items-center gap-2">
-          <Label htmlFor="edit-mode-cleaning" className="text-sm text-muted-foreground">
-            Редактировать
-          </Label>
-          <Switch id="edit-mode-cleaning" checked={editMode} onCheckedChange={setEditMode} />
+        <h1 className="font-heading text-xl">Уборка кухни</h1>
+        <div className="flex rounded-full border border-border bg-card p-1">
+          {(
+            [
+              ['view', 'Просмотр', false],
+              ['edit', 'Редактировать', true],
+            ] as const
+          ).map(([key, label, value]) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setEditMode(value)}
+              className={cn(
+                'rounded-full px-3 py-1 text-xs font-medium transition-all',
+                editMode === value ? 'bg-gradient-to-b from-flame-400 to-flame-600 text-primary-foreground' : 'text-muted-foreground',
+              )}
+            >
+              {label}
+            </button>
+          ))}
         </div>
       </div>
 
       {incoming.length > 0 && (
-        <div className="flex flex-col gap-2 rounded-xl border bg-muted/40 p-3">
+        <div className="flex flex-col gap-2 rounded-2xl border border-border bg-card/80 p-3 backdrop-blur-xl">
           <span className="text-xs font-semibold text-muted-foreground">
             Входящие предложения обмена ({incoming.length})
           </span>
@@ -152,7 +165,7 @@ export function CleaningPage() {
       )}
 
       {outgoing.length > 0 && (
-        <div className="flex flex-col gap-2 rounded-xl border p-3">
+        <div className="flex flex-col gap-2 rounded-2xl border border-border bg-card/80 p-3 backdrop-blur-xl">
           <span className="text-xs font-semibold text-muted-foreground">Ваши предложения обмена</span>
           {outgoing.map((s) => (
             <div key={s.id} className="flex items-center justify-between gap-2 text-sm">
@@ -174,12 +187,12 @@ export function CleaningPage() {
         </div>
       )}
 
-      <div className="flex items-center justify-between rounded-lg border p-1.5">
-        <Button variant="ghost" size="icon" className="size-9" onClick={() => shiftWeek(-1)} aria-label="Прошлая неделя">
+      <div className="flex items-center justify-between rounded-full border border-border bg-card p-1.5">
+        <Button variant="ghost" size="icon" className="size-9 rounded-full" onClick={() => shiftWeek(-1)} aria-label="Прошлая неделя">
           <ChevronLeft className="size-4" />
         </Button>
-        <span className="text-sm font-medium">{weekLabel}</span>
-        <Button variant="ghost" size="icon" className="size-9" onClick={() => shiftWeek(1)} aria-label="Следующая неделя">
+        <span className="font-mono text-sm font-medium">{weekLabel}</span>
+        <Button variant="ghost" size="icon" className="size-9 rounded-full" onClick={() => shiftWeek(1)} aria-label="Следующая неделя">
           <ChevronRight className="size-4" />
         </Button>
       </div>
@@ -200,7 +213,7 @@ export function CleaningPage() {
             const isMine = row?.user_id === user!.id
 
             return (
-              <div key={iso} className="rounded-xl border p-3">
+              <div key={iso} className="rounded-2xl border border-border bg-card/80 p-3 backdrop-blur-xl">
                 <div className="flex items-center justify-between gap-2">
                   <div>
                     <span className={`text-sm font-semibold ${isToday ? 'text-primary' : ''}`}>
@@ -210,11 +223,11 @@ export function CleaningPage() {
                   </div>
 
                   {status === 'done' && (
-                    <Badge className="gap-1 bg-green-600 text-white hover:bg-green-600">
+                    <Badge variant="success" className="gap-1">
                       <Check className="size-3" /> Выполнено
                     </Badge>
                   )}
-                  {status === 'missed' && <Badge variant="destructive">Пропущено</Badge>}
+                  {status === 'missed' && <Badge variant="danger">Пропущено</Badge>}
                 </div>
 
                 <div className="mt-2 flex items-center justify-between gap-2">
@@ -239,7 +252,7 @@ export function CleaningPage() {
                     </Select>
                   ) : row?.profile ? (
                     <div className="flex items-center gap-2">
-                      <Avatar className="size-6">
+                      <Avatar className="size-6" accent>
                         <AvatarImage src={row.profile.avatar_url ?? undefined} />
                         <AvatarFallback className="text-[10px]">{initials(row.profile.full_name)}</AvatarFallback>
                       </Avatar>

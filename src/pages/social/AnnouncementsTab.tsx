@@ -83,7 +83,12 @@ export function AnnouncementsTab() {
       ) : (
         <div className="flex flex-col gap-2">
           {announcements?.map((a) => (
-            <div key={a.id} className={`rounded-xl border p-3 ${a.pinned ? 'border-primary/40 bg-primary/5' : ''}`}>
+            <div
+              key={a.id}
+              className={`rounded-2xl border bg-card/80 p-3 backdrop-blur-xl ${
+                a.pinned ? 'border-flame-500/40 shadow-[0_0_0_1px_var(--flame-glow)]' : 'border-border'
+              }`}
+            >
               <div className="mb-1.5 flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <Avatar className="size-6">

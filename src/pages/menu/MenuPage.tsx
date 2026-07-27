@@ -6,8 +6,7 @@ import { useProject } from '@/hooks/useProject'
 import { startOfWeek, weekDates, toISODate, WEEKDAY_LABELS, MEAL_TYPES } from '@/lib/supabase/queries'
 import { fetchWeekMenu, fetchApprovedMembers, copyWeekMenu } from '@/lib/supabase/menu'
 import { Button } from '@/components/ui/button'
-import { Switch } from '@/components/ui/switch'
-import { Label } from '@/components/ui/label'
+import { cn } from '@/lib/utils'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Skeleton } from '@/components/ui/skeleton'
 import { MealCard } from './MealCard'
@@ -64,23 +63,37 @@ export function MenuPage() {
   const weekLabel = `${dates[0].toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' })} – ${dates[6].toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' })}`
 
   return (
-    <div className="flex flex-col gap-3 p-4">
+    <div className="bg-glow flex flex-col gap-3 p-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-semibold">Меню</h1>
-        <div className="flex items-center gap-2">
-          <Label htmlFor="edit-mode" className="text-sm text-muted-foreground">
-            Редактировать
-          </Label>
-          <Switch id="edit-mode" checked={editMode} onCheckedChange={setEditMode} />
+        <h1 className="font-heading text-xl">Меню</h1>
+        <div className="flex rounded-full border border-border bg-card p-1">
+          {(
+            [
+              ['view', 'Просмотр', false],
+              ['edit', 'Редактировать', true],
+            ] as const
+          ).map(([key, label, value]) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setEditMode(value)}
+              className={cn(
+                'rounded-full px-3 py-1 text-xs font-medium transition-all',
+                editMode === value ? 'bg-gradient-to-b from-flame-400 to-flame-600 text-primary-foreground' : 'text-muted-foreground',
+              )}
+            >
+              {label}
+            </button>
+          ))}
         </div>
       </div>
 
-      <div className="flex items-center justify-between rounded-lg border p-1.5">
-        <Button variant="ghost" size="icon" className="size-9" onClick={() => shiftWeek(-1)} aria-label="Прошлая неделя">
+      <div className="flex items-center justify-between rounded-full border border-border bg-card p-1.5">
+        <Button variant="ghost" size="icon" className="size-9 rounded-full" onClick={() => shiftWeek(-1)} aria-label="Прошлая неделя">
           <ChevronLeft className="size-4" />
         </Button>
-        <span className="text-sm font-medium">{weekLabel}</span>
-        <Button variant="ghost" size="icon" className="size-9" onClick={() => shiftWeek(1)} aria-label="Следующая неделя">
+        <span className="font-mono text-sm font-medium">{weekLabel}</span>
+        <Button variant="ghost" size="icon" className="size-9 rounded-full" onClick={() => shiftWeek(1)} aria-label="Следующая неделя">
           <ChevronRight className="size-4" />
         </Button>
       </div>

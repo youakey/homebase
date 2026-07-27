@@ -78,7 +78,7 @@ export function SwapRequestDialog({ projectId, myDate }: { projectId: string; my
                 key={c.id}
                 onClick={() => mutation.mutate(c.date)}
                 disabled={mutation.isPending}
-                className="flex min-h-11 items-center justify-between rounded-lg border px-3 py-2 text-left text-sm hover:bg-muted disabled:opacity-50"
+                className="flex min-h-11 items-center justify-between rounded-xl border border-border px-3 py-2 text-left text-sm hover:bg-muted disabled:opacity-50"
               >
                 <span>{new Date(c.date).toLocaleDateString('ru-RU', { weekday: 'short', day: 'numeric', month: 'short' })}</span>
                 <span className="text-muted-foreground">{c.profile?.full_name}</span>

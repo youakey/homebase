@@ -68,14 +68,14 @@ export function MealCard({ projectId, date, mealType, label, slot, members, edit
   }
 
   return (
-    <div className="rounded-xl border p-3">
+    <div className="rounded-2xl border border-border bg-card/80 p-3 backdrop-blur-xl">
       <div className="mb-1.5 flex items-center justify-between">
         <span className="text-sm font-semibold">{label}</span>
         {!editMode &&
           (responsible ? (
             <div className="flex items-center gap-1.5">
               <span className="text-xs text-muted-foreground">{responsible.profile.full_name}</span>
-              <Avatar className="size-5">
+              <Avatar className="size-5" accent>
                 <AvatarImage src={responsible.profile.avatar_url ?? undefined} />
                 <AvatarFallback className="text-[9px]">{initials(responsible.profile.full_name)}</AvatarFallback>
               </Avatar>
