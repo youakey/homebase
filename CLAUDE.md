@@ -43,7 +43,11 @@ GitHub Pages их не выполнит, весь бэкенд — Supabase, в�
 - package.json `postbuild` — копирует dist/index.html в dist/404.html (SPA-фоллбэк для GitHub Pages)
 
 ## Текущий статус
-Реализовано полностью (локально, ждёт первого деплоя):
+Репозиторий: https://github.com/youakey/homebase (main). Деплой на GitHub Pages настроен и уже
+успешно прошёл (https://youakey.github.io/homebase/), но UI пока не покажет реальные данные,
+пока не подключён настоящий Supabase-проект (см. "Осталось" ниже).
+
+Реализовано полностью:
 - Схема БД + RLS + RPC-функции (create_project/join_project/respond_duty_swap/cancel_duty_swap) +
   представления для статистики — supabase/migrations/0001–0008. Миграции ещё не применены к реальному
   Supabase-проекту (нужны URL/anon key от пользователя, см. ниже).
@@ -68,7 +72,7 @@ GitHub Pages их не выполнит, весь бэкенд — Supabase, в�
 Осталось (нужно от пользователя или требует реального окружения):
 - Пользователь должен создать Supabase-проект и прислать VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY
   (или access token для автоматического прогона миграций через Supabase CLI).
-- Применить supabase/migrations/*.sql к реальному проекту.
-- Создать GitHub-репозиторий homebase (публичный) и запушить, добавить секреты
-  VITE_SUPABASE_URL/VITE_SUPABASE_ANON_KEY в GitHub Actions.
-- Живая проверка на реальном мобильном устройстве после первого деплоя.
+- Применить supabase/migrations/*.sql к реальному проекту (через Supabase CLI либо вручную в SQL Editor).
+- Добавить секреты VITE_SUPABASE_URL/VITE_SUPABASE_ANON_KEY в GitHub Actions repo secrets
+  (`gh secret set`), чтобы задеплоенный сайт мог реально подключаться к Supabase.
+- Живая проверка на реальном мобильном устройстве после подключения Supabase.
