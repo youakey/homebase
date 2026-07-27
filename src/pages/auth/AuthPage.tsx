@@ -25,7 +25,7 @@ export function AuthPage() {
           options: { data: { full_name: fullName } },
         })
         if (error) throw error
-        toast.success('Аккаунт создан! Если требуется подтверждение почты — проверьте email.')
+        toast.success('Аккаунт создан! Осталось подтвердить почту — проверьте email, затем перейдите по ссылке.')
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
