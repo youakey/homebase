@@ -43,14 +43,16 @@ GitHub Pages их не выполнит, весь бэкенд — Supabase, в�
 - package.json `postbuild` — копирует dist/index.html в dist/404.html (SPA-фоллбэк для GitHub Pages)
 
 ## Текущий статус
-Репозиторий: https://github.com/youakey/homebase (main). Деплой на GitHub Pages настроен и уже
-успешно прошёл (https://youakey.github.io/homebase/), но UI пока не покажет реальные данные,
-пока не подключён настоящий Supabase-проект (см. "Осталось" ниже).
+Репозиторий: https://github.com/youakey/homebase (main). Supabase-проект подключён
+(ref tfzyaeqfxqydmxzpglph, https://tfzyaeqfxqydmxzpglph.supabase.co), все миграции 0001–0008
+применены и проверены (таблицы, RLS на всех таблицах, RPC-функции, views, storage-бакет avatars —
+всё на месте). Секреты VITE_SUPABASE_URL/VITE_SUPABASE_ANON_KEY добавлены в GitHub Actions,
+локальный .env.local заполнен реальными значениями. Деплой на GitHub Pages настроен и проходит
+успешно (https://youakey.github.io/homebase/) уже с реальным бэкендом — проект полностью рабочий.
 
 Реализовано полностью:
 - Схема БД + RLS + RPC-функции (create_project/join_project/respond_duty_swap/cancel_duty_swap) +
-  представления для статистики — supabase/migrations/0001–0008. Миграции ещё не применены к реальному
-  Supabase-проекту (нужны URL/anon key от пользователя, см. ниже).
+  представления для статистики — supabase/migrations/0001–0008.
 - Авторизация (email+пароль) и онбординг (создать/вступить в проект, pending/approved флоу).
 - Базовый каркас: нижняя навигация из 5 вкладок, роутинг react-router (createBrowserRouter-стиль,
   чистый SPA-режим), переключение проектов.
@@ -69,10 +71,13 @@ GitHub Pages их не выполнит, весь бэкенд — Supabase, в�
 - PWA (vite-plugin-pwa, манифест, иконки), 404-фоллбэк для SPA-роутинга на GitHub Pages,
   GitHub Actions workflow для автодеплоя.
 
-Осталось (нужно от пользователя или требует реального окружения):
-- Пользователь должен создать Supabase-проект и прислать VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY
-  (или access token для автоматического прогона миграций через Supabase CLI).
-- Применить supabase/migrations/*.sql к реальному проекту (через Supabase CLI либо вручную в SQL Editor).
-- Добавить секреты VITE_SUPABASE_URL/VITE_SUPABASE_ANON_KEY в GitHub Actions repo secrets
-  (`gh secret set`), чтобы задеплоенный сайт мог реально подключаться к Supabase.
-- Живая проверка на реальном мобильном устройстве после подключения Supabase.
+Осталось:
+- Живая проверка на реальном мобильном устройстве (регистрация → онбординг → меню/уборка/чат) —
+  агент не может открыть браузер, нужна ручная проверка пользователем.
+- Supabase Management access token, который пользователь дал для прогона миграций, стоит отозвать
+  в Supabase (Account → Access Tokens) — он больше не нужен и даёт полный доступ к аккаунту.
+- Заметка: у этого Supabase-проекта включена GitHub-интеграция (auto-deploy миграций при пуше
+  в supabase/migrations/) — она уже подхватила 0001_init.sql самостоятельно при создании проекта.
+  Значит новые миграции, добавленные через git push, могут применяться автоматически ещё раз —
+  их нужно писать так, чтобы повторный прогон не ломался (идемпотентно), либо явно проверять
+  в дашборде Supabase, что там всё ок, перед тем как полагаться на этот механизм.
