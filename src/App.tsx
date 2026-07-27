@@ -26,13 +26,16 @@ function Gate() {
 }
 
 function ProjectGate() {
-  const { isLoading, approvedMemberships, pendingMemberships } = useProject()
+  const { isLoading, approvedMemberships, pendingMemberships, currentProject } = useProject()
 
   if (isLoading) return <FullScreenSpinner />
   if (approvedMemberships.length === 0) {
     if (pendingMemberships.length > 0) return <PendingPage />
     return <OnboardingPage />
   }
+  // currentProject is set a tick later by an effect in ProjectProvider (reads localStorage) —
+  // guard against rendering pages that assume it's non-null in that gap.
+  if (!currentProject) return <FullScreenSpinner />
 
   return (
     <Routes>
