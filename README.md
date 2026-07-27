@@ -1,32 +1,28 @@
-# React + TypeScript + Vite
+# HomeBase
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Веб-приложение для совместного быта соседей по квартире: меню на неделю, дежурства по уборке кухни
+с обменами, объявления и чат, настройки профиля/проекта, геймифицированная статистика.
 
-Currently, two official plugins are available:
+Подробный контекст и конвенции проекта — в [CLAUDE.md](./CLAUDE.md).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Стек
 
-## React Compiler
+Vite + React + TypeScript (SPA) + React Router + Tailwind v4 + shadcn/ui + Supabase
+(Auth, Postgres, RLS, Realtime, Storage) + TanStack Query. Деплой — GitHub Pages через GitHub Actions.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Локальный запуск
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+cp .env.local.example .env.local   # заполнить VITE_SUPABASE_URL и VITE_SUPABASE_ANON_KEY
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Миграции БД лежат в [supabase/migrations](./supabase/migrations) — применяются к Supabase-проекту
+через Supabase CLI (`supabase db push`) либо вручную через SQL Editor в дашборде, по порядку файлов.
+
+## Деплой
+
+Пуш в `main` автоматически собирает и публикует сайт на GitHub Pages
+(см. [.github/workflows/deploy.yml](./.github/workflows/deploy.yml)). Секреты `VITE_SUPABASE_URL`
+и `VITE_SUPABASE_ANON_KEY` должны быть добавлены в GitHub Actions secrets репозитория.
